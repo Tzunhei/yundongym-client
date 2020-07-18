@@ -4,16 +4,12 @@
     "airbnb",
     "plugin:jsx-a11y/recommended",
     "prettier",
-    "prettier/react",
-    "baseui"
+    "prettier/react"
   ],
   "env": { "browser": true },
   "plugins": ["jsx-a11y", "prettier"],
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "react/prop-types": "off",
-    "baseui/deprecated-theme-api": "warn",
-    "baseui/deprecated-component-api": "warn",
-    "baseui/no-deep-imports": "warn"
+    "react/prop-types": "off"
   }
 }
