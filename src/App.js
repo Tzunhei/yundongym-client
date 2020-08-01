@@ -1,15 +1,14 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/client';
 import client from './ApolloClient';
+import AppRouter from './AppRouter';
 
-function App() {
+const App = () => {
   return (
     <ApolloProvider client={client}>
-      <div>
-        <header>Hello World</header>
-      </div>
+      <AppRouter />
     </ApolloProvider>
   );
-}
+};
 
 export default App;
