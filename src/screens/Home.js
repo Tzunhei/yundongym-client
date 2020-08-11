@@ -8,17 +8,30 @@ import {
   Paper,
   TextField,
 } from '@material-ui/core';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { MyTextField } from 'components/MyTextField';
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
     height: '100%',
   },
   loginContainer: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
     width: '100%',
     padding: theme.spacing(4),
   },
 }));
+
+const loginInitialValues = {
+  email: '',
+  password: '',
+};
+
+const loginValidationSchema = Yup.object({
+  email: Yup.string().required('Veuillez renseigner votre email.'),
+  password: Yup.string().required('Veuillez renseigner votre mot de passe.'),
+});
 
 const Home = () => {
   const classes = useStyles();
@@ -33,13 +46,25 @@ const Home = () => {
         alignItems='center'>
         <Paper className={classes.loginContainer}>
           <Typography variant='h4'>Login</Typography>
-          <Box py={2} display='flex' flexDirection='column'>
-            <TextField color='primary' label='email' />
-            <TextField label='mot de passe' />
-          </Box>
-          <Button variant='contained' disableElevation disableTouchRipple>
-            Se connecter
-          </Button>
+          <Formik
+            initialValues={loginInitialValues}
+            validationSchema={loginValidationSchema}>
+            {({ handleSubmit }) => (
+              <form onSubmit={handleSubmit}>
+                <Box py={2} display='flex' flexDirection='column'>
+                  <MyTextField name='email' label='email' />
+                  <MyTextField name='password' label='mot de passe' />
+                </Box>
+                <Button
+                  color='primary'
+                  variant='contained'
+                  disableElevation
+                  disableTouchRipple>
+                  Se connecter
+                </Button>
+              </form>
+            )}
+          </Formik>
         </Paper>
       </Box>
     </Container>
