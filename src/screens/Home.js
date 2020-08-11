@@ -6,11 +6,11 @@ import {
   Box,
   Container,
   Paper,
-  TextField,
 } from '@material-ui/core';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { MyTextField } from 'components/MyTextField';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -35,6 +35,11 @@ const loginValidationSchema = Yup.object({
 
 const Home = () => {
   const classes = useStyles();
+  const history = useHistory();
+
+  const handleLogin = () => {
+    history.push('/admin/dashboard');
+  };
 
   return (
     <Container maxWidth='sm' className={classes.mainContainer}>
@@ -48,7 +53,8 @@ const Home = () => {
           <Typography variant='h4'>Login</Typography>
           <Formik
             initialValues={loginInitialValues}
-            validationSchema={loginValidationSchema}>
+            validationSchema={loginValidationSchema}
+            onSubmit={handleLogin}>
             {({ handleSubmit }) => (
               <form onSubmit={handleSubmit}>
                 <Box py={2} display='flex' flexDirection='column'>
@@ -56,6 +62,7 @@ const Home = () => {
                   <MyTextField name='password' label='mot de passe' />
                 </Box>
                 <Button
+                  type='submit'
                   color='primary'
                   variant='contained'
                   disableElevation

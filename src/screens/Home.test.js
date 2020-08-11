@@ -1,13 +1,20 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, waitForElement } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/extend-expect';
 import Home from './Home';
 
-test('renders a form', () => {
-  const { getByText } = render(<Home />);
-  expect(getByText('Login')).toBeInTheDocument();
+describe('Login form', () => {
+  it('throw errors if submit without filling the form', async () => {
+    const { getByRole, getByText } = render(<Home />);
 
-  expect(getByText('Se connecter')).toBeInTheDocument();
-  expect(getByText('email')).toBeInTheDocument();
-  expect(getByText('mot de passe')).toBeInTheDocument();
+    const submitButton = getByRole('button', '/Se connecter/');
+
+    userEvent.click(submitButton);
+
+    await waitForElement(() => getByText('Veuillez renseigner votre email.'));
+    expect(
+      getByText('Veuillez renseigner votre mot de passe.'),
+    ).toBeInTheDocument();
+  });
 });
