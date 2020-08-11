@@ -12,6 +12,7 @@ const MyTextField = ({ label, ...props }) => {
         {...field}
         {...props}
         error={meta.touched && meta.error}
+        helperText={meta.touched && meta.error}
       />
     </>
   );
