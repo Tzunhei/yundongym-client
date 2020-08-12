@@ -116,8 +116,12 @@ const Home = () => {
             </Formik>
           </Box>
           <Divider />
-          <Box py={2}>
-            <Button variant='contained' disableElevation disableTouchRipple>
+          <Box py={2} textAlign='center'>
+            <Button
+              color='primary'
+              variant='outlined'
+              disableElevation
+              disableTouchRipple>
               S'inscrire
             </Button>
           </Box>
