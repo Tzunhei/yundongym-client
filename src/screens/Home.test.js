@@ -72,7 +72,7 @@ describe('Login form', () => {
     const emailInput = getByLabelText('email');
     const passwordInput = getByLabelText('mot de passe');
 
-    const submitButton = getByRole('button', '/Se connecter/');
+    const submitButton = getByRole('button', { name: 'Se connecter' });
 
     userEvent.type(emailInput, 'test@email.com');
     userEvent.type(passwordInput, 'test');
@@ -98,7 +98,7 @@ describe('Login form', () => {
     const emailInput = getByLabelText('email');
     const passwordInput = getByLabelText('mot de passe');
 
-    const submitButton = getByRole('button', '/Se connecter/');
+    const submitButton = getByRole('button', { name: 'Se connecter' });
 
     userEvent.type(emailInput, 'test@email.com');
     userEvent.type(passwordInput, 'wrongPwd');

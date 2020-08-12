@@ -6,6 +6,7 @@ import {
   Box,
   Container,
   Paper,
+  Divider,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { Formik } from 'formik';
@@ -68,7 +69,7 @@ const Home = () => {
   };
 
   return (
-    <Container maxWidth='sm' className={classes.mainContainer}>
+    <Container maxWidth='xs' className={classes.mainContainer}>
       <Box
         height='100%'
         display='flex'
@@ -84,32 +85,42 @@ const Home = () => {
               </Alert>
             </Box>
           )}
-          <Formik
-            initialValues={loginInitialValues}
-            validationSchema={loginValidationSchema}
-            onSubmit={handleLogin}>
-            {({ handleSubmit }) => (
-              <form onSubmit={handleSubmit}>
-                <Box py={2} display='flex' flexDirection='column'>
-                  <MyTextField id='email' name='email' label='email' />
-                  <MyTextField
-                    id='password'
-                    type='password'
-                    name='password'
-                    label='mot de passe'
-                  />
-                </Box>
-                <Button
-                  type='submit'
-                  color='primary'
-                  variant='contained'
-                  disableElevation
-                  disableTouchRipple>
-                  Se connecter
-                </Button>
-              </form>
-            )}
-          </Formik>
+          <Box py={2}>
+            <Formik
+              initialValues={loginInitialValues}
+              validationSchema={loginValidationSchema}
+              onSubmit={handleLogin}>
+              {({ handleSubmit }) => (
+                <form onSubmit={handleSubmit}>
+                  <Box py={2} display='flex' flexDirection='column'>
+                    <MyTextField id='email' name='email' label='email' />
+                    <MyTextField
+                      id='password'
+                      type='password'
+                      name='password'
+                      label='mot de passe'
+                    />
+                  </Box>
+                  <Box textAlign='center'>
+                    <Button
+                      type='submit'
+                      color='primary'
+                      variant='contained'
+                      disableElevation
+                      disableTouchRipple>
+                      Se connecter
+                    </Button>
+                  </Box>
+                </form>
+              )}
+            </Formik>
+          </Box>
+          <Divider />
+          <Box py={2}>
+            <Button variant='contained' disableElevation disableTouchRipple>
+              S'inscrire
+            </Button>
+          </Box>
         </Paper>
       </Box>
     </Container>
