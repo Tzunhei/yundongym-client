@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   makeStyles,
   Typography,
@@ -7,10 +7,13 @@ import {
   Container,
   Paper,
 } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { MyTextField } from 'components/MyTextField';
 import { useHistory } from 'react-router-dom';
+import { useMutation, gql } from '@apollo/client';
+import jwtDecode from 'jwt-decode';
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -33,12 +36,35 @@ const loginValidationSchema = Yup.object({
   password: Yup.string().required('Veuillez renseigner votre mot de passe.'),
 });
 
+const LOGIN = gql`
+  mutation login($input: loginInput!) {
+    login(input: $input) {
+      message
+      token
+    }
+  }
+`;
+
 const Home = () => {
   const classes = useStyles();
   const history = useHistory();
+  const [error, setError] = useState(false);
+  const [login] = useMutation(LOGIN, {
+    onCompleted: (data) => {
+      localStorage.setItem('token', data.login.token);
+      const { role } = jwtDecode(data.login.token);
+      if (role === 'ADMIN') {
+        history.push('/admin/dashboard');
+      }
+    },
+    onError: () => {
+      setError(true);
+      setTimeout(() => setError(false), 5000);
+    },
+  });
 
-  const handleLogin = () => {
-    history.push('/admin/dashboard');
+  const handleLogin = ({ email, password }) => {
+    login({ variables: { input: { email, password } } });
   };
 
   return (
@@ -51,6 +77,13 @@ const Home = () => {
         alignItems='center'>
         <Paper className={classes.loginContainer}>
           <Typography variant='h4'>Login</Typography>
+          {error && (
+            <Box my={2}>
+              <Alert severity='error'>
+                Votre combinaison email / mot de passe est incorrecte.
+              </Alert>
+            </Box>
+          )}
           <Formik
             initialValues={loginInitialValues}
             validationSchema={loginValidationSchema}
@@ -58,8 +91,13 @@ const Home = () => {
             {({ handleSubmit }) => (
               <form onSubmit={handleSubmit}>
                 <Box py={2} display='flex' flexDirection='column'>
-                  <MyTextField name='email' label='email' />
-                  <MyTextField name='password' label='mot de passe' />
+                  <MyTextField id='email' name='email' label='email' />
+                  <MyTextField
+                    id='password'
+                    type='password'
+                    name='password'
+                    label='mot de passe'
+                  />
                 </Box>
                 <Button
                   type='submit'
