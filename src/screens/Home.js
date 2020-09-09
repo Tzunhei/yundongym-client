@@ -121,7 +121,8 @@ const Home = () => {
               color='primary'
               variant='outlined'
               disableElevation
-              disableTouchRipple>
+              disableTouchRipple
+              onClick={() => history.push('/signup')}>
               S'inscrire
             </Button>
           </Box>

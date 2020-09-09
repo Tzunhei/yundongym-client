@@ -5,6 +5,7 @@ import { MemoryRouter, Switch, Route } from 'react-router-dom';
 import { render, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/extend-expect';
+import { SignUp } from 'components/SignUp';
 import Home from './Home';
 import AdminDashboard from './AdminDashboard';
 
@@ -110,5 +111,26 @@ describe('Login form', () => {
     );
 
     expect(errorText).toBeInTheDocument();
+  });
+
+  it('opens a sign-up form', async () => {
+    const { getByRole, getByLabelText } = render(
+      <MockedProvider mocks={[errorLoginMock]} addTypename={false}>
+        <MemoryRouter>
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route exact path='/signup' component={SignUp} />
+            <Route exact path='/admin/dashboard' component={AdminDashboard} />
+          </Switch>
+        </MemoryRouter>
+      </MockedProvider>,
+    );
+
+    const signupBtn = getByRole('button', { name: "S'inscrire" });
+
+    userEvent.click(signupBtn);
+
+    const passwordInput = await getByLabelText('Choisissez votre mot de passe');
+    expect(passwordInput).toBeInTheDocument();
   });
 });
