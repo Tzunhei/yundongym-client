@@ -1,7 +1,7 @@
 import React from 'react';
 import { gql } from '@apollo/client';
 import { MockedProvider } from '@apollo/client/testing';
-import { MemoryRouter, Switch, Route } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { render, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/extend-expect';
@@ -63,10 +63,8 @@ describe('Login form', () => {
     const { findByText, getByRole, getByLabelText } = render(
       <MockedProvider mocks={[loginMock]} addTypename={false}>
         <MemoryRouter>
-          <Switch>
-            <Route exact path='/' component={Home} />
-            <Route exact path='/admin/dashboard' component={AdminDashboard} />
-          </Switch>
+          <Route exact path='/' component={Home} />
+          <Route exact path='/admin/dashboard' component={AdminDashboard} />
         </MemoryRouter>
       </MockedProvider>,
     );
@@ -89,10 +87,8 @@ describe('Login form', () => {
     const { findByText, getByRole, getByLabelText } = render(
       <MockedProvider mocks={[errorLoginMock]} addTypename={false}>
         <MemoryRouter>
-          <Switch>
-            <Route exact path='/' component={Home} />
-            <Route exact path='/admin/dashboard' component={AdminDashboard} />
-          </Switch>
+          <Route exact path='/' component={Home} />
+          <Route exact path='/admin/dashboard' component={AdminDashboard} />
         </MemoryRouter>
       </MockedProvider>,
     );
@@ -115,13 +111,10 @@ describe('Login form', () => {
 
   it('opens a sign-up form', async () => {
     const { getByRole, getByLabelText } = render(
-      <MockedProvider mocks={[errorLoginMock]} addTypename={false}>
+      <MockedProvider>
         <MemoryRouter>
-          <Switch>
-            <Route exact path='/' component={Home} />
-            <Route exact path='/signup' component={SignUp} />
-            <Route exact path='/admin/dashboard' component={AdminDashboard} />
-          </Switch>
+          <Route exact path='/' component={Home} />
+          <Route exact path='/signup' component={SignUp} />
         </MemoryRouter>
       </MockedProvider>,
     );
