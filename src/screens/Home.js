@@ -7,11 +7,12 @@ import {
   Container,
   Paper,
   Divider,
+  Link,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { MyTextField } from 'components/MyTextField';
+import { AuthContainer, MyTextField } from 'components';
 import { useHistory } from 'react-router-dom';
 import { useMutation, gql } from '@apollo/client';
 import jwtDecode from 'jwt-decode';
@@ -69,66 +70,60 @@ const Home = () => {
   };
 
   return (
-    <Container maxWidth='xs' className={classes.mainContainer}>
-      <Box
-        height='100%'
-        display='flex'
-        flexDirection='column'
-        justifyContent='center'
-        alignItems='center'>
-        <Paper className={classes.loginContainer}>
-          <Typography variant='h4'>Login</Typography>
-          {error && (
-            <Box my={2}>
-              <Alert severity='error'>
-                Votre combinaison email / mot de passe est incorrecte.
-              </Alert>
-            </Box>
+    <AuthContainer>
+      <Typography variant='h4'>Login</Typography>
+      {error && (
+        <Box my={2}>
+          <Alert severity='error'>
+            Votre combinaison email / mot de passe est incorrecte.
+          </Alert>
+        </Box>
+      )}
+      <Box py={2}>
+        <Formik
+          initialValues={loginInitialValues}
+          validationSchema={loginValidationSchema}
+          onSubmit={handleLogin}>
+          {({ handleSubmit }) => (
+            <form onSubmit={handleSubmit}>
+              <Box py={2} display='flex' flexDirection='column'>
+                <MyTextField id='email' name='email' label='email' />
+                <MyTextField
+                  id='password'
+                  type='password'
+                  name='password'
+                  label='mot de passe'
+                />
+              </Box>
+              <Box textAlign='center'>
+                <Button
+                  type='submit'
+                  color='primary'
+                  variant='contained'
+                  disableElevation
+                  disableTouchRipple>
+                  Se connecter
+                </Button>
+              </Box>
+            </form>
           )}
-          <Box py={2}>
-            <Formik
-              initialValues={loginInitialValues}
-              validationSchema={loginValidationSchema}
-              onSubmit={handleLogin}>
-              {({ handleSubmit }) => (
-                <form onSubmit={handleSubmit}>
-                  <Box py={2} display='flex' flexDirection='column'>
-                    <MyTextField id='email' name='email' label='email' />
-                    <MyTextField
-                      id='password'
-                      type='password'
-                      name='password'
-                      label='mot de passe'
-                    />
-                  </Box>
-                  <Box textAlign='center'>
-                    <Button
-                      type='submit'
-                      color='primary'
-                      variant='contained'
-                      disableElevation
-                      disableTouchRipple>
-                      Se connecter
-                    </Button>
-                  </Box>
-                </form>
-              )}
-            </Formik>
-          </Box>
-          <Divider />
-          <Box py={2} textAlign='center'>
-            <Button
-              color='primary'
-              variant='outlined'
-              disableElevation
-              disableTouchRipple
-              onClick={() => history.push('/signup')}>
-              S'inscrire
-            </Button>
-          </Box>
-        </Paper>
+        </Formik>
       </Box>
-    </Container>
+      <Divider />
+      <Box py={2} textAlign='center'>
+        <Typography>
+          <Link
+            href='/'
+            onClick={(e) => {
+              e.preventDefault();
+              history.push('/signup');
+            }}
+            variant='body2'>
+            Pas de compte ? Inscrivez-vous
+          </Link>
+        </Typography>
+      </Box>
+    </AuthContainer>
   );
 };
 

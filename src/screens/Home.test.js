@@ -5,8 +5,8 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { render, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/extend-expect';
-import { SignUp } from 'components/SignUp';
 import Home from './Home';
+import SignUp from './SignUp';
 import AdminDashboard from './AdminDashboard';
 
 const LOGIN = gql`
@@ -109,7 +109,7 @@ describe('Login form', () => {
     expect(errorText).toBeInTheDocument();
   });
 
-  it('opens a sign-up form', async () => {
+  it('opens a sign-up form then return to the login page', async () => {
     const { getByRole, getByLabelText } = render(
       <MockedProvider>
         <MemoryRouter>
@@ -119,11 +119,22 @@ describe('Login form', () => {
       </MockedProvider>,
     );
 
-    const signupBtn = getByRole('button', { name: "S'inscrire" });
+    const signupBtn = getByRole('link', {
+      name: 'Pas de compte ? Inscrivez-vous',
+    });
 
     userEvent.click(signupBtn);
 
-    const passwordInput = await getByLabelText('Choisissez votre mot de passe');
+    const passwordInput = await getByLabelText('Confirmez votre mot de passe');
     expect(passwordInput).toBeInTheDocument();
+
+    const hasAccountBtn = getByRole('link', {
+      name: 'Vous avez déjà un compte ? Connectez-vous',
+    });
+
+    userEvent.click(hasAccountBtn);
+
+    const loginBtn = await getByRole('button', { name: 'Se connecter' });
+    expect(loginBtn).toBeInTheDocument();
   });
 });
