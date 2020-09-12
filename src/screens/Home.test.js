@@ -113,7 +113,7 @@ describe('Login form', () => {
     const { getByRole, getByLabelText } = render(
       <MockedProvider>
         <MemoryRouter>
-          <Route exact path='/' component={Home} />
+          <Route exact path={['/', '/login']} component={Home} />
           <Route exact path='/signup' component={SignUp} />
         </MemoryRouter>
       </MockedProvider>,

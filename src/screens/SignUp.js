@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import { MyTextField } from 'components/MyTextField';
-import { Box, Button, Link, Typography } from '@material-ui/core';
+import { Box, Button, Divider, Link, Typography } from '@material-ui/core';
 import { AuthContainer } from 'components';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -65,37 +65,36 @@ const SignUp = () => {
                   label='Confirmez votre mot de passe'
                 />
               </Box>
-              <Box
-                py={2}
-                display='flex'
-                flexDirection='column'
-                alignItems='center'>
+              <Box display='flex' flexDirection='column' alignItems='center'>
                 <Box mb={2}>
                   <Button
                     color='primary'
-                    variant='outlined'
+                    variant='contained'
                     disableElevation
                     disableTouchRipple
                     type='submit'>
                     S&apos;inscrire
                   </Button>
                 </Box>
-                <Typography>
-                  <Link
-                    href='/'
-                    onClick={(e) => {
-                      e.preventDefault();
-                      history.push('/login');
-                    }}
-                    variant='body2'>
-                    Vous avez déjà un compte ? Connectez-vous
-                  </Link>
-                </Typography>
               </Box>
             </Box>
           </form>
         )}
       </Formik>
+      <Divider />
+      <Box py={2} display='flex' justifyContent='center'>
+        <Typography>
+          <Link
+            href='/'
+            onClick={(e) => {
+              e.preventDefault();
+              history.push('/login');
+            }}
+            variant='body2'>
+            Vous avez déjà un compte ? Connectez-vous
+          </Link>
+        </Typography>
+      </Box>
     </AuthContainer>
   );
 };
