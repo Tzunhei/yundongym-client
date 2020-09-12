@@ -24,7 +24,7 @@ const validationSchema = Yup.object({
     .test(
       'check-pwd',
       'Le mot de passe entré ne correspond pas à celui entré',
-      function (value) {
+      function checkPwd(value) {
         return this.parent.password === value;
       },
     ),
@@ -85,7 +85,7 @@ const SignUp = () => {
                     href='/'
                     onClick={(e) => {
                       e.preventDefault();
-                      history.push('/');
+                      history.push('/login');
                     }}
                     variant='body2'>
                     Vous avez déjà un compte ? Connectez-vous
