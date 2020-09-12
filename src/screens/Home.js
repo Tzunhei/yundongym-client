@@ -1,14 +1,5 @@
 import React, { useState } from 'react';
-import {
-  makeStyles,
-  Typography,
-  Button,
-  Box,
-  Container,
-  Paper,
-  Divider,
-  Link,
-} from '@material-ui/core';
+import { Typography, Button, Box, Divider, Link } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -16,17 +7,6 @@ import { AuthContainer, MyTextField } from 'components';
 import { useHistory } from 'react-router-dom';
 import { useMutation, gql } from '@apollo/client';
 import jwtDecode from 'jwt-decode';
-
-const useStyles = makeStyles((theme) => ({
-  mainContainer: {
-    height: '100%',
-  },
-  loginContainer: {
-    backgroundColor: theme.palette.secondary.main,
-    width: '100%',
-    padding: theme.spacing(4),
-  },
-}));
 
 const loginInitialValues = {
   email: '',
@@ -48,7 +28,6 @@ const LOGIN = gql`
 `;
 
 const Home = () => {
-  const classes = useStyles();
   const history = useHistory();
   const [error, setError] = useState(false);
   const [login] = useMutation(LOGIN, {
