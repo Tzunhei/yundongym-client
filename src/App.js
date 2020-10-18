@@ -1,19 +1,18 @@
 import React from 'react';
-import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from 'theme';
+import { ApolloProvider } from '@apollo/client';
+import client from './ApolloClient';
+import AppRouter from './AppRouter';
 
-const client = new ApolloClient({
-  uri: 'https://localhost:4000',
-  cache: new InMemoryCache(),
-});
-
-function App() {
+const App = () => {
   return (
     <ApolloProvider client={client}>
-      <div>
-        <header>Hello World</header>
-      </div>
+      <ThemeProvider theme={theme}>
+        <AppRouter />
+      </ThemeProvider>
     </ApolloProvider>
   );
-}
+};
 
 export default App;
